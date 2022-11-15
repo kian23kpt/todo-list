@@ -1,4 +1,20 @@
 :host {
-  background: #3cb0db;
   min-height: 100vh;
+  background: #3cb0db;
+
+  ul {
+    list-style: none;
+
+    li {
+      margin: 20px 0;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
 }
