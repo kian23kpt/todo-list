@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './components';
 import { MainLayoutComponent } from './layouts';
-import { MainListComponent } from './pages';
+import { MainListComponent, SingleListPageComponent } from './pages';
 import { WidgetModule } from '../widget/widget.module';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -21,6 +22,15 @@ const routes: Routes = [
         component: MainListComponent,
       },
       {
+        path: 'list',
+        children: [
+          {
+            path: ':id',
+            component: SingleListPageComponent,
+          },
+        ],
+      },
+      {
         path: '**',
         redirectTo: 'main-list',
       },
@@ -29,7 +39,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MainLayoutComponent, MainListComponent, SidebarComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), WidgetModule],
+  declarations: [
+    MainLayoutComponent,
+    MainListComponent,
+    SidebarComponent,
+    SingleListPageComponent,
+  ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    WidgetModule,
+    FormsModule,
+  ],
 })
 export class FeatureModule {}

@@ -1,9 +1,11 @@
 :host {
   min-height: 100vh;
   background: #3cb0db;
+  padding: 30px;
 
   ul {
     list-style: none;
+    padding-inline-start: 0;
 
     li {
       margin: 20px 0;
@@ -16,5 +18,16 @@
       color: #fff;
       text-decoration: none;
     }
+
+    .add-list {
+      border-top: 2px solid #fff;
+      padding-top: 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .mat-form-field {
+    color: #fff;
   }
 }

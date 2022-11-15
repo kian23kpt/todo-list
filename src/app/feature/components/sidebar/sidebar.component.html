@@ -1,15 +1,15 @@
 <ul>
   <li>
-    <a routerLink="/">
+    <!-- <a routerLink="/">
       <mat-icon>list_alt</mat-icon>
       Main List
     </a>
-  </li>
+  </li> -->
 
-  <li>
-    <a routerLink="">
-      <mat-icon>add_circle_outline</mat-icon>
-      Add List
+  <li *ngFor="let list of Lists$ | async">
+    <a [routerLink]="['/list', list._id]">
+      <mat-icon>list_alt</mat-icon>
+      {{ list.title }}
     </a>
   </li>
 
@@ -19,4 +19,21 @@
       Completed Tasks
     </a>
   </li>
+
+  <li class="add-list">
+    <a (click)="showAddListInput = !showAddListInput">
+      <mat-icon>add_circle_outline</mat-icon>
+      Add List
+    </a>
+  </li>
+
+  <section *ngIf="showAddListInput">
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="listTiltle" />
+      <button mat-icon-button (click)="addList()" matSuffix>
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </section>
 </ul>
