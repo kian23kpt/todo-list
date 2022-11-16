@@ -1,5 +1,3 @@
-import { List } from '../models';
-
 export namespace ListActions {
   export class MainList {
     static readonly type = '[List] Main List';

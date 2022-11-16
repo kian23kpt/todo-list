@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxsModule } from '@ngxs/store';
-import { ListState } from './core/states';
+import { ListState, TaskState } from './core/states';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 @NgModule({
@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxsModule.forRoot([ListState]),
+    NgxsModule.forRoot([ListState, TaskState]),
     HttpClientModule,
   ],
   providers: [

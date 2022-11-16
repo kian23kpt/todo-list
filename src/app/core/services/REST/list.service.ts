@@ -33,9 +33,9 @@ export class ListService {
 
   public addList(title: string): Observable<List.Model[]> {
     const _url = `${this._serverUrl}/api/lists/`;
-    const id = new ObjectID();
-    const date = new Date();
-    const body = { title: title, id: id, date: date, isMain: false };
+    // const id = new ObjectID();
+    // const date = new Date();
+    const body = { title: title, isMain: false };
 
     return this._http.post<List.Model[]>(_url, body);
   }

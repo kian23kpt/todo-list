@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ListActions } from 'src/app/core/actions';
-import { List } from 'src/app/core/models';
-import { ListState } from 'src/app/core/states';
+import { ListActions, TaskActions } from 'src/app/core/actions';
+import { List, Task } from 'src/app/core/models';
+import { ListState, TaskState } from 'src/app/core/states';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -14,6 +14,8 @@ import { SubSink } from 'subsink';
 })
 export class SingleListPageComponent implements OnInit, OnDestroy {
   @Select(ListState.selectedList) selectedlist$?: Observable<List.Model>;
+  @Select(TaskState.tasks) tasks$?: Observable<Task.Model[]>;
+
   listId!: string;
   listTiltle!: string;
   editableTitle = false;
@@ -33,7 +35,9 @@ export class SingleListPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._store.dispatch(new TaskActions.FindTaskByListId(this.listId));
+  }
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
