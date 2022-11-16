@@ -24,5 +24,6 @@ export class SidebarComponent implements OnInit {
 
   addList() {
     this._store.dispatch(new ListActions.AddList(this.listTiltle));
+    this.listTiltle = '';
   }
 }

@@ -22,7 +22,7 @@ export namespace ListActions {
   export class EditList {
     static readonly type = '[List] Edit List';
 
-    constructor(public id: string, public data: List.Model) {}
+    constructor(public id: string, public title: string) {}
   }
   export class DeleteList {
     static readonly type = '[List] Delete List';

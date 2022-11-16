@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { ListActions } from 'src/app/core/actions';
+import { List } from 'src/app/core/models';
+import { ListState } from 'src/app/core/states';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -10,13 +13,22 @@ import { SubSink } from 'subsink';
   styleUrls: ['./single-list-page.component.scss'],
 })
 export class SingleListPageComponent implements OnInit, OnDestroy {
+  @Select(ListState.selectedList) selectedlist$?: Observable<List.Model>;
   listId!: string;
+  listTiltle!: string;
+  editableTitle = false;
   private _subscriptions = new SubSink();
 
-  constructor(private _activatedRoute: ActivatedRoute, private _store: Store) {
+  constructor(
+    private _activatedRoute: ActivatedRoute,
+    private _store: Store,
+    private _router: Router
+  ) {
     this._subscriptions.add(
       this._activatedRoute.params.subscribe((res) => {
         this.listId = res['id'];
+        this._store.dispatch(new ListActions.GetSingleList(this.listId));
+        this.editableTitle = false;
       })
     );
   }
@@ -29,5 +41,12 @@ export class SingleListPageComponent implements OnInit, OnDestroy {
 
   deleteList() {
     this._store.dispatch(new ListActions.DeleteList(this.listId));
+    this._router.navigateByUrl('/mainList');
+  }
+
+  editListTitle() {
+    this._store.dispatch(
+      new ListActions.EditList(this.listId, this.listTiltle)
+    );
   }
 }

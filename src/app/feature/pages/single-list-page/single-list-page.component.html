@@ -1,2 +1,27 @@
-<p>{{ listId }}</p>
-<button mat-flat-button (click)="deleteList()" color="warn">delete</button>
+<section class="list-page__section--header">
+  <ng-container *ngIf="!editableTitle; else inputMode">
+    <h1>{{ (selectedlist$ | async)?.title }}</h1>
+  </ng-container>
+  <ng-template #inputMode>
+    <mat-form-field>
+      <input matInput type="text" [(ngModel)]="listTiltle" />
+      <mat-icon (click)="editListTitle()" matSuffix>done</mat-icon>
+    </mat-form-field>
+  </ng-template>
+  <div class="buttons__section" *ngIf="!(selectedlist$ | async)?.isMain">
+    <button
+      mat-icon-button
+      (click)="editableTitle = !editableTitle"
+      color="primary"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="deleteList()" color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</section>
+
+<section class="list-page__section--tasks">
+  <app-task-card></app-task-card>
+</section>

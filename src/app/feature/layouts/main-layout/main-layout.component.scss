@@ -1,4 +1,8 @@
-:host{
-    display: grid;
-    grid-template-columns: 300px 1fr;
+:host {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  section {
+    width: 50vw;
+    margin: 30px auto;
+  }
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { SidebarComponent } from './components';
+import { SidebarComponent, TaskCardComponent } from './components';
 import { MainLayoutComponent } from './layouts';
 import { MainListComponent, SingleListPageComponent } from './pages';
 import { WidgetModule } from '../widget/widget.module';
@@ -44,6 +44,7 @@ const routes: Routes = [
     MainListComponent,
     SidebarComponent,
     SingleListPageComponent,
+    TaskCardComponent,
   ],
   imports: [
     CommonModule,

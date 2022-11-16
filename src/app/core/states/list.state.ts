@@ -9,6 +9,7 @@ import { ListService } from '../services/REST';
   name: 'list',
   defaults: {
     lists: [],
+    selectedList: null,
   },
 })
 @Injectable()
@@ -18,6 +19,11 @@ export class ListState {
   @Selector()
   static lists(state: List.State): List.Model[] {
     return state.lists;
+  }
+
+  @Selector()
+  static selectedList(state: List.State): List.Model | null {
+    return state.selectedList;
   }
 
   @Action(ListActions.MainList, { cancelUncompleted: true })
@@ -42,12 +48,26 @@ export class ListState {
     );
   }
 
+  @Action(ListActions.GetSingleList, { cancelUncompleted: true })
+  getSingleList(
+    { dispatch, patchState }: StateContext<List.State>,
+    { id }: ListActions.GetSingleList
+  ) {
+    return this._restService.getSingleList(id).pipe(
+      tap((response: List.Model) => {
+        patchState({
+          selectedList: response,
+        });
+      })
+    );
+  }
+
   @Action(ListActions.EditList, { cancelUncompleted: true })
   editList(
     { dispatch, patchState }: StateContext<List.State>,
-    { id, data }: ListActions.EditList
+    { id, title }: ListActions.EditList
   ) {
-    return this._restService.editList(id, data).pipe(
+    return this._restService.editList(id, title).pipe(
       tap((response: List.Model[]) => {
         dispatch(new ListActions.AllLists());
       })

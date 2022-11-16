@@ -25,6 +25,12 @@ export class ListService {
     return this._http.get<List.Model[]>(_url);
   }
 
+  public getSingleList(id: string): Observable<List.Model> {
+    const _url = `${this._serverUrl}/api/lists/${id}`;
+
+    return this._http.get<List.Model>(_url);
+  }
+
   public addList(title: string): Observable<List.Model[]> {
     const _url = `${this._serverUrl}/api/lists/`;
     const id = new ObjectID();
@@ -34,10 +40,13 @@ export class ListService {
     return this._http.post<List.Model[]>(_url, body);
   }
 
-  public editList(id: string, data: List.Model): Observable<List.Model[]> {
+  public editList(id: string, title: string): Observable<List.Model[]> {
     const _url = `${this._serverUrl}/api/lists/${id}`;
+    const body = {
+      title: title,
+    };
 
-    return this._http.post<List.Model[]>(_url, data);
+    return this._http.put<List.Model[]>(_url, body);
   }
 
   public deleteList(id: string): Observable<List.Model[]> {

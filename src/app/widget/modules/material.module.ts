@@ -22,10 +22,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-  MatBottomSheetModule,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -33,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
     MatSelectModule,
     MatDividerModule,
     MatSnackBarModule,
@@ -60,6 +60,7 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
     MatSelectModule,
     MatDividerModule,
     MatSnackBarModule,
