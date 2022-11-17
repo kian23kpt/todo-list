@@ -5,6 +5,7 @@
       Main List
     </a>
   </li> -->
+  </li>
 
   <li *ngFor="let list of Lists$ | async">
     <a [routerLink]="['/list', list._id]">
@@ -22,7 +23,9 @@
 
   <li class="add-list">
     <a (click)="showAddListInput = !showAddListInput">
-      <mat-icon>add_circle_outline</mat-icon>
+      <mat-icon>{{
+        showAddListInput ? 'remove' : 'add'
+      }}</mat-icon>
       Add List
     </a>
   </li>
@@ -32,7 +35,7 @@
       <mat-label>Title</mat-label>
       <input matInput type="text" [(ngModel)]="listTiltle" />
       <button mat-icon-button (click)="addList()" matSuffix>
-        <mat-icon>add</mat-icon>
+        <mat-icon>done</mat-icon>
       </button>
     </mat-form-field>
   </section>

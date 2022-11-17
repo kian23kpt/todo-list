@@ -1,4 +1,31 @@
-<mat-card>
-  {{ data.title }}
-  {{ data.description }}
+<mat-card class="mat-elevation-z0">
+  <mat-card-header>
+    <h3 [class.done]="data.done">
+      {{ data.title }}
+    </h3>
+    <p>
+      {{ data.description }}
+    </p>
+  </mat-card-header>
+  <mat-card-actions>
+    <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+  </mat-card-actions>
 </mat-card>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>arrow_forward</mat-icon>
+    Move to Daily
+  </button>
+  <button mat-menu-item *ngIf="!data.done" (click)="taskDone()">
+    <mat-icon>done</mat-icon>
+    Done
+  </button>
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete</mat-icon>
+    Delete
+  </button>
+</mat-menu>

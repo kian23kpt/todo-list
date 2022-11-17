@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { SidebarComponent, TaskCardComponent } from './components';
+import {
+  AddTaskComponent,
+  SidebarComponent,
+  TaskCardComponent,
+} from './components';
 import { MainLayoutComponent } from './layouts';
-import { MainListComponent, SingleListPageComponent } from './pages';
+import {
+  CompletedTasksComponent,
+  MainListComponent,
+  SingleListPageComponent,
+} from './pages';
 import { WidgetModule } from '../widget/widget.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -31,6 +39,10 @@ const routes: Routes = [
         ],
       },
       {
+        path: 'completed-tasks',
+        component: CompletedTasksComponent,
+      },
+      {
         path: '**',
         redirectTo: 'main-list',
       },
@@ -45,12 +57,15 @@ const routes: Routes = [
     SidebarComponent,
     SingleListPageComponent,
     TaskCardComponent,
+    CompletedTasksComponent,
+    AddTaskComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     WidgetModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class FeatureModule {}

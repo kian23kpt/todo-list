@@ -1,0 +1,4 @@
+<app-task-card
+*ngFor="let task of completedTasks$ | async"
+[data]="task"
+></app-task-card>

@@ -14,13 +14,13 @@ export namespace TaskActions {
   export class AddTask {
     static readonly type = '[Task] Add Task';
 
-    constructor(public data: any) {}
+    constructor(public data: Task.Model | any) {}
   }
 
   export class EditTask {
     static readonly type = '[Task] Edit Task';
 
-    constructor(public id: string, public data: Task.Model) {}
+    constructor(public id: string, public data: Task.Model | any) {}
   }
 
   export class DeleteTask {

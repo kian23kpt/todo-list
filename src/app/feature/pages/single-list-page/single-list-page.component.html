@@ -23,6 +23,7 @@
 </section>
 
 <section class="list-page__section--tasks">
+  <app-add-task [listId]="listId"></app-add-task>
   <app-task-card
     *ngFor="let task of tasks$ | async"
     [data]="task"

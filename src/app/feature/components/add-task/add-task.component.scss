@@ -1,0 +1,19 @@
+:host {
+  mat-card {
+    border: 1px solid #d1d1d1;
+    background: #f3f3f3;
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        resize: none;
+      }
+      button {
+        width: 100px;
+        align-self: flex-end;
+      }
+    }
+  }
+}

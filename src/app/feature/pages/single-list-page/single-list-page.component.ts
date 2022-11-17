@@ -30,13 +30,13 @@ export class SingleListPageComponent implements OnInit, OnDestroy {
       this._activatedRoute.params.subscribe((res) => {
         this.listId = res['id'];
         this._store.dispatch(new ListActions.GetSingleList(this.listId));
+        this._store.dispatch(new TaskActions.FindTaskByListId(this.listId));
         this.editableTitle = false;
       })
     );
   }
 
   ngOnInit(): void {
-    this._store.dispatch(new TaskActions.FindTaskByListId(this.listId));
   }
 
   ngOnDestroy(): void {

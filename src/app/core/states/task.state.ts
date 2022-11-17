@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { tap } from 'rxjs';
 import { ListActions, TaskActions } from '../actions';
 import { Task } from '../models';
 import { TaskService } from '../services/REST/task.service';
+import { ListState } from './list.state';
 
 @State<Task.State>({
   name: 'task',
@@ -14,7 +15,7 @@ import { TaskService } from '../services/REST/task.service';
 })
 @Injectable()
 export class TaskState {
-  constructor(private _restService: TaskService) {}
+  constructor(private _restService: TaskService, private _store: Store) {}
 
   @Selector()
   static completedTasks(state: Task.State): Task.Model[] {
@@ -53,15 +54,24 @@ export class TaskState {
     { dispatch, patchState }: StateContext<Task.State>,
     { data }: TaskActions.AddTask
   ) {
-    return this._restService
-      .addTask(data)
-      .pipe
-      // tap((response: Task.Model[]) => {
-      //   patchState({
-      //     completedTask: response,
-      //   });
-      // })
-      ();
+    return this._restService.addTask(data).pipe(
+      tap(() => {
+        dispatch(new TaskActions.FindTaskByListId(data.list));
+      })
+    );
+  }
+
+  @Action(TaskActions.EditTask, { cancelUncompleted: true })
+  editTask(
+    { dispatch }: StateContext<Task.State>,
+    { id, data }: TaskActions.EditTask
+  ) {
+    return this._restService.editTask(id, data).pipe(
+      tap(() => {
+        const listId = this._store.selectSnapshot(ListState.selectedList)?._id;
+        dispatch(new TaskActions.FindTaskByListId(listId!));
+      })
+    );
   }
 
   @Action(TaskActions.FindTaskByListId, { cancelUncompleted: true })

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { TaskActions } from 'src/app/core/actions';
 import { Task } from '../../../core/models';
 @Component({
   selector: 'app-task-card',
@@ -8,7 +10,13 @@ import { Task } from '../../../core/models';
 export class TaskCardComponent implements OnInit {
   @Input() data!: Task.Model;
 
-  constructor() {}
+  constructor(private _store: Store) {}
 
   ngOnInit(): void {}
+
+  taskDone() {
+    this._store.dispatch(
+      new TaskActions.EditTask(this.data._id, { done: true })
+    );
+  }
 }
