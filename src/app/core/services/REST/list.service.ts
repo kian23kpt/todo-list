@@ -40,13 +40,13 @@ export class ListService {
     return this._http.post<List.Model[]>(_url, body);
   }
 
-  public editList(id: string, title: string): Observable<List.Model[]> {
+  public editList(id: string, title: string): Observable<List.Model> {
     const _url = `${this._serverUrl}/api/lists/${id}`;
     const body = {
       title: title,
     };
 
-    return this._http.put<List.Model[]>(_url, body);
+    return this._http.put<List.Model>(_url, body);
   }
 
   public deleteList(id: string): Observable<List.Model[]> {

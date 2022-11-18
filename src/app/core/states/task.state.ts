@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { tap } from 'rxjs';
-import { ListActions, TaskActions } from '../actions';
+import { TaskActions } from '../actions';
 import { Task } from '../models';
 import { TaskService } from '../services/REST/task.service';
-import { ListState } from './list.state';
 
 @State<Task.State>({
   name: 'task',
@@ -27,17 +26,6 @@ export class TaskState {
     return state.tasks;
   }
 
-  @Action(TaskActions.AllTasks, { cancelUncompleted: true })
-  getAllTasks({ dispatch, patchState }: StateContext<Task.State>) {
-    return this._restService.getAllTasks().pipe(
-      tap((response: Task.Model[]) => {
-        patchState({
-          //   lists: response,
-        });
-      })
-    );
-  }
-
   @Action(TaskActions.CompletedTasks, { cancelUncompleted: true })
   completedTasks({ dispatch, patchState }: StateContext<Task.State>) {
     return this._restService.completedTasks().pipe(
@@ -51,25 +39,49 @@ export class TaskState {
 
   @Action(TaskActions.AddTask, { cancelUncompleted: true })
   addTask(
-    { dispatch, patchState }: StateContext<Task.State>,
+    { patchState, getState }: StateContext<Task.State>,
     { data }: TaskActions.AddTask
   ) {
     return this._restService.addTask(data).pipe(
-      tap(() => {
-        dispatch(new TaskActions.FindTaskByListId(data.list));
+      tap((response: Task.Model) => {
+        const updatedTasks = [...getState().tasks, response];
+        patchState({
+          tasks: updatedTasks,
+        });
       })
     );
   }
 
   @Action(TaskActions.EditTask, { cancelUncompleted: true })
   editTask(
-    { dispatch }: StateContext<Task.State>,
+    { patchState, getState }: StateContext<Task.State>,
     { id, data }: TaskActions.EditTask
   ) {
     return this._restService.editTask(id, data).pipe(
       tap(() => {
-        const listId = this._store.selectSnapshot(ListState.selectedList)?._id;
-        dispatch(new TaskActions.FindTaskByListId(listId!));
+        const index = getState().tasks.findIndex((task) => task._id === id);
+        getState().tasks[index] = { ...getState().tasks[index], ...data };
+      })
+    );
+  }
+
+  @Action(TaskActions.DeleteTask, { cancelUncompleted: true })
+  deleteTask(
+    { dispatch, getState }: StateContext<Task.State>,
+    { id }: TaskActions.DeleteTask
+  ) {
+    return this._restService.deleteTask(id).pipe(
+      tap(() => {
+        const index = getState().tasks.findIndex((task) => task._id === id);
+        const completedIndex = getState().completedTask.findIndex(
+          (task) => task._id === id
+        );
+        if (index > -1) {
+          getState().tasks.splice(index, 1);
+        }
+        if (completedIndex > -1) {
+          getState().completedTask.splice(completedIndex, 1);
+        }
       })
     );
   }

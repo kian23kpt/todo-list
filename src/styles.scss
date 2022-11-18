@@ -18,3 +18,9 @@ app-sidebar {
     color: #fff;
   }
 }
+
+.list-page__section--header {
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+}

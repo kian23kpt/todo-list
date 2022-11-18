@@ -1,20 +1,22 @@
 <ul>
-  <li>
-    <!-- <a routerLink="/">
-      <mat-icon>list_alt</mat-icon>
-      Main List
+  <li [class.active]="relativePath[1] === 'main-list'">
+    <a routerLink="/">
+      <mat-icon>event_available</mat-icon>
+      Daily Tasks
     </a>
-  </li> -->
   </li>
 
-  <li *ngFor="let list of Lists$ | async">
+  <li
+    *ngFor="let list of otherLists$ | async"
+    [class.active]="relativePath[2] === list._id"
+  >
     <a [routerLink]="['/list', list._id]">
       <mat-icon>list_alt</mat-icon>
       {{ list.title }}
     </a>
   </li>
 
-  <li>
+  <li [class.active]="relativePath[1] === 'completed-tasks'">
     <a routerLink="/completed-tasks">
       <mat-icon>task</mat-icon>
       Completed Tasks
@@ -23,9 +25,7 @@
 
   <li class="add-list">
     <a (click)="showAddListInput = !showAddListInput">
-      <mat-icon>{{
-        showAddListInput ? 'remove' : 'add'
-      }}</mat-icon>
+      <mat-icon>{{ showAddListInput ? 'remove' : 'add' }}</mat-icon>
       Add List
     </a>
   </li>
@@ -33,7 +33,7 @@
   <section *ngIf="showAddListInput">
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Title</mat-label>
-      <input matInput type="text" [(ngModel)]="listTiltle" />
+      <input matInput type="text" [(ngModel)]="listTiltle" maxlength="25"/>
       <button mat-icon-button (click)="addList()" matSuffix>
         <mat-icon>done</mat-icon>
       </button>

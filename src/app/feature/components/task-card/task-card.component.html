@@ -8,11 +8,14 @@
     </p>
   </mat-card-header>
   <mat-card-actions>
+    <small>
+      {{ data.date | date }}
+    </small>
     <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
   </mat-card-actions>
 </mat-card>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item *ngIf="data.list !== mainListId" (click)="moveTask()">
     <mat-icon>arrow_forward</mat-icon>
     Move to Daily
   </button>
@@ -20,11 +23,11 @@
     <mat-icon>done</mat-icon>
     Done
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item *ngIf="!data.done" (click)="openEditDialog()">
     <mat-icon>edit</mat-icon>
     Edit
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="deleteTask()">
     <mat-icon>delete</mat-icon>
     Delete
   </button>

@@ -10,6 +10,7 @@ import { ListService } from '../services/REST';
   defaults: {
     lists: [],
     selectedList: null,
+    mainList: null,
   },
 })
 @Injectable()
@@ -26,12 +27,17 @@ export class ListState {
     return state.selectedList;
   }
 
+  @Selector()
+  static mainList(state: List.State): List.Model | null {
+    return state.mainList;
+  }
+
   @Action(ListActions.MainList, { cancelUncompleted: true })
-  getmainList({ dispatch, patchState }: StateContext<List.State>) {
+  getMainList({ dispatch, patchState }: StateContext<List.State>) {
     return this._restService.getMainList().pipe(
       tap((response: List.Model) => {
         patchState({
-          //   lists: response,
+          mainList: response,
         });
       })
     );
@@ -64,11 +70,11 @@ export class ListState {
 
   @Action(ListActions.EditList, { cancelUncompleted: true })
   editList(
-    { dispatch, patchState }: StateContext<List.State>,
+    { dispatch }: StateContext<List.State>,
     { id, title }: ListActions.EditList
   ) {
     return this._restService.editList(id, title).pipe(
-      tap((response: List.Model[]) => {
+      tap(() => {
         dispatch(new ListActions.AllLists());
       })
     );
@@ -76,7 +82,7 @@ export class ListState {
 
   @Action(ListActions.AddList, { cancelUncompleted: true })
   addList(
-    { dispatch, patchState }: StateContext<List.State>,
+    { dispatch }: StateContext<List.State>,
     { title }: ListActions.AddList
   ) {
     return this._restService.addList(title).pipe(
@@ -88,7 +94,7 @@ export class ListState {
 
   @Action(ListActions.DeleteList, { cancelUncompleted: true })
   deleteList(
-    { dispatch, patchState }: StateContext<List.State>,
+    { dispatch }: StateContext<List.State>,
     { id }: ListActions.DeleteList
   ) {
     return this._restService.deleteList(id).pipe(

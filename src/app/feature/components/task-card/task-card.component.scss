@@ -21,9 +21,11 @@
     }
     mat-card-actions {
       padding: 0;
+      display: flex;
 
       mat-icon {
         cursor: pointer;
+        margin-inline-start: 20px;
       }
     }
 

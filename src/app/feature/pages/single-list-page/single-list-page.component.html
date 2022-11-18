@@ -1,9 +1,9 @@
 <section class="list-page__section--header">
   <ng-container *ngIf="!editableTitle; else inputMode">
-    <h1>{{ (selectedlist$ | async)?.title }}</h1>
+    <h1>{{ listTiltle }}</h1>
   </ng-container>
   <ng-template #inputMode>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput type="text" [(ngModel)]="listTiltle" />
       <mat-icon (click)="editListTitle()" matSuffix>done</mat-icon>
     </mat-form-field>

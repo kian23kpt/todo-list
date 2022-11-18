@@ -1,1 +1,13 @@
-<p>main-list works!</p>
+<section class="list-page__section--header">
+  <ng-container>
+    <h1>{{ (mainList$ | async)?.title }}</h1>
+  </ng-container>
+</section>
+
+<section class="list-page__section--tasks">
+  <app-add-task [listId]="listId"></app-add-task>
+  <app-task-card
+    *ngFor="let task of tasks$ | async"
+    [data]="task"
+  ></app-task-card>
+</section>

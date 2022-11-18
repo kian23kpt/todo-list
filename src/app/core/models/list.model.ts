@@ -9,5 +9,6 @@ export namespace List {
   export interface State {
     lists: Model[];
     selectedList: Model | null;
+    mainList: Model | null;
   }
 }

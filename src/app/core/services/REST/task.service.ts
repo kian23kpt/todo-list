@@ -24,10 +24,10 @@ export class TaskService {
     return this._http.get<Task.Model[]>(_url);
   }
 
-  public addTask(data: Task.Model) {
+  public addTask(data: Task.Model): Observable<Task.Model> {
     const _url = `${this._serverUrl}/api/tasks`;
 
-    return this._http.post(_url, data);
+    return this._http.post<Task.Model>(_url, data);
   }
 
   public findTaskByListId(listId: string): Observable<Task.Model[]> {
@@ -40,5 +40,11 @@ export class TaskService {
     const _url = `${this._serverUrl}/api/tasks/${id}`;
 
     return this._http.put(_url, data);
+  }
+
+  public deleteTask(id: string) {
+    const _url = `${this._serverUrl}/api/tasks/${id}`;
+
+    return this._http.delete(_url);
   }
 }

@@ -1,4 +1,7 @@
+<h2 *ngIf="(completedTasks$ | async)?.length === 0">
+  There is no completed tasks
+</h2>
 <app-task-card
-*ngFor="let task of completedTasks$ | async"
-[data]="task"
+  *ngFor="let task of completedTasks$ | async"
+  [data]="task"
 ></app-task-card>

@@ -1,15 +1,7 @@
 import { Task } from '../models';
 
 export namespace TaskActions {
-  export class AllTasks {
-    static readonly type = '[Task] All Tasks';
-  }
-
-  export class GetSingleTask {
-    static readonly type = '[Task] Single Task';
-
-    constructor(public id: string) {}
-  }
+  
 
   export class AddTask {
     static readonly type = '[Task] Add Task';

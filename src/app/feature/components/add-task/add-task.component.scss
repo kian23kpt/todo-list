@@ -1,8 +1,5 @@
 :host {
   mat-card {
-    border: 1px solid #d1d1d1;
-    background: #f3f3f3;
-
     form {
       display: flex;
       flex-direction: column;
@@ -15,5 +12,10 @@
         align-self: flex-end;
       }
     }
+  }
+
+  .gray-card {
+    background: #f3f3f3;
+    border: 1px solid #d1d1d1;
   }
 }
