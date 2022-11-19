@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
 import { TaskActions } from '../actions';
 import { Task } from '../models';
-import { TaskService } from '../services/REST/task.service';
+import { TaskService } from '../services/REST';
 
 @State<Task.State>({
   name: 'task',
@@ -14,7 +14,7 @@ import { TaskService } from '../services/REST/task.service';
 })
 @Injectable()
 export class TaskState {
-  constructor(private _restService: TaskService, private _store: Store) {}
+  constructor(private _restService: TaskService) {}
 
   @Selector()
   static completedTasks(state: Task.State): Task.Model[] {
@@ -27,7 +27,7 @@ export class TaskState {
   }
 
   @Action(TaskActions.CompletedTasks, { cancelUncompleted: true })
-  completedTasks({ dispatch, patchState }: StateContext<Task.State>) {
+  completedTasks({ patchState }: StateContext<Task.State>) {
     return this._restService.completedTasks().pipe(
       tap((response: Task.Model[]) => {
         patchState({
@@ -54,7 +54,7 @@ export class TaskState {
 
   @Action(TaskActions.EditTask, { cancelUncompleted: true })
   editTask(
-    { patchState, getState }: StateContext<Task.State>,
+    { getState }: StateContext<Task.State>,
     { id, data }: TaskActions.EditTask
   ) {
     return this._restService.editTask(id, data).pipe(
@@ -67,7 +67,7 @@ export class TaskState {
 
   @Action(TaskActions.DeleteTask, { cancelUncompleted: true })
   deleteTask(
-    { dispatch, getState }: StateContext<Task.State>,
+    { getState }: StateContext<Task.State>,
     { id }: TaskActions.DeleteTask
   ) {
     return this._restService.deleteTask(id).pipe(
@@ -88,7 +88,7 @@ export class TaskState {
 
   @Action(TaskActions.FindTaskByListId, { cancelUncompleted: true })
   findTaskByListId(
-    { dispatch, patchState }: StateContext<Task.State>,
+    { patchState }: StateContext<Task.State>,
     { listId }: TaskActions.FindTaskByListId
   ) {
     return this._restService.findTaskByListId(listId).pipe(

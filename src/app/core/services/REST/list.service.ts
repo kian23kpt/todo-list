@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { ObjectID } from 'bson';
 import { Observable } from 'rxjs';
 import { List } from '../../models';
 
@@ -33,8 +32,6 @@ export class ListService {
 
   public addList(title: string): Observable<List.Model[]> {
     const _url = `${this._serverUrl}/api/lists/`;
-    // const id = new ObjectID();
-    // const date = new Date();
     const body = { title: title, isMain: false };
 
     return this._http.post<List.Model[]>(_url, body);

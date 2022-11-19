@@ -86,7 +86,7 @@ export class ListState {
     { title }: ListActions.AddList
   ) {
     return this._restService.addList(title).pipe(
-      tap((response: List.Model[]) => {
+      tap(() => {
         dispatch(new ListActions.AllLists());
       })
     );
@@ -98,7 +98,7 @@ export class ListState {
     { id }: ListActions.DeleteList
   ) {
     return this._restService.deleteList(id).pipe(
-      tap((response: List.Model[]) => {
+      tap(() => {
         dispatch(new ListActions.AllLists());
       })
     );
